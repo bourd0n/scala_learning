@@ -49,7 +49,7 @@ object Pure {
   }
   
   private def _200: PartialFunction[Resource, Response] = {
-    case resource if(resource.exists) => 
+    case resource if(resource.exists) =>
             "HTTP/1.1 200 OK" :: 
             ("Date " + new java.util.Date) :: 
             "Content-Type: text/html" :: 
