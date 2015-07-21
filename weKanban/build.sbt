@@ -13,7 +13,9 @@ resolvers += "Local Maven Repository" at "file://" + Path.userHome + "/.m2/repos
 libraryDependencies ++= Seq(
   "org.eclipse.jetty" % "jetty-server" % "9.3.1.v20150714" % "container",
   "org.scala-tools.testing" % "specs" % "1.6.2" % "test",
-  "javax.servlet" % "javax.servlet-api" % "3.1.0" % "provided"
+  "javax.servlet" % "javax.servlet-api" % "3.1.0" % "provided",
+  "org.scalaz" %% "scalaz-core" % "7.1.3",
+//  "org.scalaz" % "scalaz-http_2.10" % "6.0.4"
 )
 
 enablePlugins(JettyPlugin)
