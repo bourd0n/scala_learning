@@ -22,4 +22,8 @@ libraryDependencies ++= Seq(
   "org.scala-lang.modules" %% "scala-xml" % "1.0.4"
 )
 
+libraryDependencies += "com.h2database" % "h2" % "1.4.187"
+
+libraryDependencies += "org.squeryl" %% "squeryl" % "0.9.5-7"
+
 enablePlugins(JettyPlugin)

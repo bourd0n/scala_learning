@@ -10,7 +10,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>Scalaz</servlet-name>
-        <url-pattern>/appr/*</url-pattern>
+        <url-pattern>/static/*</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>index.html</welcome-file>
