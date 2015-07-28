@@ -8,7 +8,7 @@ scalaVersion := "2.11.6"
 
 scalacOptions ++= Seq("-unchecked", "-deprecation", "-feature")
 
-resolvers += "Local Maven Repository" at "file://" + Path.userHome + "/.m2/repository"
+resolvers += Resolver.mavenLocal
 
 // disable using the Scala version in output paths and artifacts
 crossPaths := false
