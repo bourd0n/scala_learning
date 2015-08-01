@@ -26,8 +26,9 @@ object KanbanSchema extends Schema {
     }
   }
 
-  private[this] def validate() = {
-
+  def tx[A](a: => A): A = {
+    init()
+    inTransaction(a)
   }
 
 }
