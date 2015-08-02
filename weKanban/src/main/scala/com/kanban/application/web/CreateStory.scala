@@ -2,47 +2,57 @@ package com.kanban.application.web
 
 import scala.xml.Elem
 
+/**
+ * Just to test scala xml support
+ */
 object CreateStory {
   def apply(message: String = ""): Elem = {
     <html>
       <head>
         <title>Create new story</title>
+        <script src="/js/jquery-2.1.4.min.js" type="text/javascript"></script>
         <link rel="stylesheet" href="/css/main.css" type="text/css" media="screen" charset="utf-8"/>
+        <link rel="stylesheet" href="/css/materialize.min.css" type="text/css" media="screen" charset="utf-8"/>
+        <script src="/js/materialize.min.js" type="text/javascript"></script>
       </head>
       <body>
         <span class="message">
           {message}
         </span>
-        <div class="createStory">
-          <form action="/card/save" method="post" accept-charset="utf-8">
-            <fieldset>
-              <legend>Create new story</legend>
-              <div class="section">
-                <label for="storyNumber">Story Number
-                  <span class="subtle">
-                    (uniquely identifies story)
-                  </span>
-                </label>
-                <input type="text" size="10" maxlength="10" minlength="3" name="storyNumber" id="storyNumber"/>
+        <div class="row">
+          <form action="/card/save" method="post" accept-charset="utf-8" class="col s12">
+            <legend>Create new story</legend>
+            <div class="row">
+              <div class="input-field col s6">
+                <input placeholder="(uniquely identifies story)" type="text" size="10" maxlength="10" minlength="3" name="storyNumber" id="storyNumber" class="validate"/>
+                <label for="storyNumber">Story Number</label>
               </div>
-              <div class="section">
-                <label for="title">Title
-                  <span class="subtle">
-                    (describe the story)
-                  </span>
-                </label>
-                <textarea rows="5" cols="30" name="title"
-                          id="title"></textarea>
+            </div>
+            <div class="row">
+              <div class="input-field col s6">
+                <label for="title">Title</label>
+                <textarea placeholder="(describe the story)" rows="5" cols="30" name="title"
+                          id="title" class="materialize-textarea"></textarea>
               </div>
-              <div class="section">
-                <button type="submit">Save</button>
-              </div>
-            </fieldset>
+            </div>
+            <div class="row">
+              <button type="submit" class="btn waves-effect waves-light">
+                <i class="material-icons">Save</i>
+              </button>
+            </div>
           </form>
-          <span class="linkLabel">
-            <a href="/kanban/board">Go to Kanban board</a>
-          </span>
         </div>
+        <footer class="page-footer">
+          <div class="container">
+            <div class="row">
+              <div class="col l6 s12">
+                <span class="linkLabel">
+                  <a href="/kanban/board" class="grey-text text-lighten-3">Go to Kanban board</a>
+                </span>
+              </div>
+            </div>
+          </div>
+        </footer>
       </body>
     </html>
   }
