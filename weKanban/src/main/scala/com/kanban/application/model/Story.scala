@@ -8,13 +8,18 @@ class ValidationException(message: String) extends RuntimeException(message)
 object Story {
   def apply(number: String, title: String, phase: String) = new Story(number, title, phase)
 
+  def apply(number: String, title: String) = new Story(number, title, "")
+
   implicit class StringToTuple(val left: String) extends AnyVal {
     def ||(right: String): MyTuple2 = MyTuple2(left, right)
   }
+
 }
 
 class Story(val number: String, val title: String, val phase: String) {
+
   import Story._
+
   private[this] def validate() = {
     if ((number || title).isEmpty) {
       throw new ValidationException("Both number and title are required")
@@ -26,16 +31,16 @@ class Story(val number: String, val title: String, val phase: String) {
   }
 
   def save(): Either[Throwable, Unit] = {
-    tx {
-      try {
+    try {
+      tx {
         validate()
         stories.insert(this)
         //fail - investigate
         //stories.insertOrUpdate(this)
         Right(())
-      } catch {
-        case exception: Throwable => Left(exception)
       }
+    } catch {
+      case exception: Throwable => Left(exception)
     }
   }
 }

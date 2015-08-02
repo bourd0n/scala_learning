@@ -3,24 +3,50 @@ package com.kanban.application
 import javax.servlet.RequestDispatcher
 import javax.servlet.http.{HttpServlet, HttpServletRequest, HttpServletResponse}
 
+import com.kanban.application.model.Story
 import com.kanban.application.web.CreateStory
 
 class WeKanbanApplication extends HttpServlet {
+
+  import Method._
+
   override def doGet(req: HttpServletRequest, resp: HttpServletResponse): Unit = {
     println(req)
-    val uri = req.getRequestURI
-    uri match {
-      case UriPath("kanban" :: "card" :: "create" :: Nil) => resp.getWriter.println(CreateStory.apply("message"))
-      case UriPath("kanban" :: listPath) =>
+    req match {
+      case MethodParts(GET, "kanban" :: "card" :: "create" :: Nil) =>
+        val param = Option(req.getParameter("message")).orElse(Option(req.getAttribute("message"))).getOrElse("")
+        resp.getWriter.println(CreateStory(param.toString))
+      case MethodParts(GET, "kanban" :: listPath) =>
         forward(req, resp, listPath) {
           "/html/" + _.mkString("/") + ".html"
         }
-      case UriPath("kanban" :: path :: Nil) =>
+      case MethodParts(GET, "kanban" :: path :: Nil) =>
         forward(req, resp, path) {
           "/html/" + _ + ".html"
         }
     }
+  }
 
+
+  override def doPost(req: HttpServletRequest, resp: HttpServletResponse): Unit = {
+    println(req)
+    req match {
+      case MethodParts(POST, "kanban" :: "card" :: "save" :: Nil) => saveStory(req, resp)
+    }
+  }
+
+  private def saveStory(req: HttpServletRequest, resp: HttpServletResponse) = {
+    val title = req.getParameter("title")
+    val number = req.getParameter("storyNumber")
+    Story(number, title).save() match {
+      case Right(()) =>
+        //todo: error! req is still POST request
+        req.setAttribute("message", "success")
+        forward(req, resp, "/kanban/card/create") { s => s }
+      case Left(ex) =>
+        req.setAttribute("message", ex.toString)
+        forward(req, resp, "/kanban/card/create") { s => s }
+    }
   }
 
   def forward[A](req: HttpServletRequest, resp: HttpServletResponse, uri: A)(urlConverter: A => String): Unit = {
@@ -29,8 +55,30 @@ class WeKanbanApplication extends HttpServlet {
   }
 
 }
+
 object UriPath {
   def unapply(r: String): Option[List[String]] = {
     Some(r.stripPrefix("/").split('/').toList)
+  }
+}
+
+object Method extends Enumeration {
+  type Method = Value
+  val GET, POST = Value
+}
+
+object MethodParts {
+
+  import Method._
+
+  def unapply(req: HttpServletRequest): Option[(Method, List[String])] = {
+    val method = req.getMethod
+    val paths = req.getRequestURI.stripPrefix("/").split('/').toList
+    println(method.toLowerCase + " " + paths)
+    method.toLowerCase match {
+      case "get" => Some((GET, paths))
+      case "post" => Some((POST, paths))
+      case _ => None
+    }
   }
 }

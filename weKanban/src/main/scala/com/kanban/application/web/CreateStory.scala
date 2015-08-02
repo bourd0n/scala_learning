@@ -20,7 +20,7 @@ object CreateStory {
           {message}
         </span>
         <div class="row">
-          <form action="/card/save" method="post" accept-charset="utf-8" class="col s12">
+          <form action="/kanban/card/save" method="post" accept-charset="utf-8" class="col s12">
             <legend>Create new story</legend>
             <div class="row">
               <div class="input-field col s6">
