@@ -14,7 +14,10 @@ class WeKanbanApplication extends HttpServlet {
     println(req)
     req match {
       case MethodParts(GET, "kanban" :: "card" :: "create" :: Nil) =>
-        val param = Option(req.getParameter("message")).orElse(Option(req.getAttribute("message"))).getOrElse("")
+        val param = Option(req.getParameter("message"))
+          .orElse(Option(req.getAttribute("message")))
+          .orElse(Option(req.getSession.getAttribute("message")))
+          .getOrElse("")
         resp.getWriter.println(CreateStory(param.toString))
       case MethodParts(GET, "kanban" :: listPath) =>
         forward(req, resp, listPath) {
@@ -38,15 +41,12 @@ class WeKanbanApplication extends HttpServlet {
   private def saveStory(req: HttpServletRequest, resp: HttpServletResponse) = {
     val title = req.getParameter("title")
     val number = req.getParameter("storyNumber")
-    Story(number, title).save() match {
-      case Right(()) =>
-        //todo: error! req is still POST request
-        req.setAttribute("message", "success")
-        forward(req, resp, "/kanban/card/create") { s => s }
-      case Left(ex) =>
-        req.setAttribute("message", ex.toString)
-        forward(req, resp, "/kanban/card/create") { s => s }
+    val message = Story(number, title).save() match {
+      case Right(_) => "success"
+      case Left(ex) => ex.toString
     }
+    req.getSession.setAttribute("message", message)
+    resp.sendRedirect("/kanban/card/create")
   }
 
   def forward[A](req: HttpServletRequest, resp: HttpServletResponse, uri: A)(urlConverter: A => String): Unit = {

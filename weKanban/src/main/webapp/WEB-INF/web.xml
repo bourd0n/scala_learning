@@ -12,7 +12,18 @@
         <servlet-name>Scalaz</servlet-name>
         <url-pattern>/kanban/*</url-pattern>
     </servlet-mapping>
+
+    <!-- Spring -->
+    <servlet>
+        <servlet-name>weKanban</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>weKanban</servlet-name>
+        <url-pattern>/spring/*</url-pattern>
+    </servlet-mapping>
     <welcome-file-list>
-        <welcome-file>/html/board.html</welcome-file>
+        <welcome-file>/spring/board</welcome-file>
     </welcome-file-list>
 </web-app>

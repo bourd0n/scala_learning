@@ -8,12 +8,15 @@ class ValidationException(message: String) extends RuntimeException(message)
 object Story {
   def apply(number: String, title: String, phase: String) = new Story(number, title, phase)
 
-  def apply(number: String, title: String) = new Story(number, title, "")
+  def apply(number: String, title: String) = new Story(number, title, "ready")
 
   implicit class StringToTuple(val left: String) extends AnyVal {
     def ||(right: String): MyTuple2 = MyTuple2(left, right)
   }
 
+  def findAllByPhase(phase: String): Iterable[Story] = tx {
+    from(stories)(s => where(s.phase === phase) select s) map {s=>s}
+  }
 }
 
 class Story(val number: String, val title: String, val phase: String) {
