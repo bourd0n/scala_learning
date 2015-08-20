@@ -47,7 +47,7 @@ object CreateStory {
             <div class="row">
               <div class="col l6 s12">
                 <span class="linkLabel">
-                  <a href="/kanban/board" class="grey-text text-lighten-3">Go to Kanban board</a>
+                  <a href="/spring/board" class="grey-text text-lighten-3">Go to Kanban board</a>
                 </span>
               </div>
             </div>

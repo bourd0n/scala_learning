@@ -24,6 +24,6 @@
         <url-pattern>/spring/*</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
-        <welcome-file>/spring/board</welcome-file>
+        <welcome-file>/spring/index.html</welcome-file>
     </welcome-file-list>
 </web-app>

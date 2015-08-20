@@ -7,7 +7,7 @@ import org.springframework.web.servlet.ModelAndView
 @Controller
 class KanbanBoardController {
 
-  @RequestMapping(value = Array("/spring/board", "/board"), method = Array(RequestMethod.GET))
+  @RequestMapping(value = Array("/board", "/index.html"), method = Array(RequestMethod.GET))
   def helloPage: ModelAndView = {
     println(s"Controller $this called")
     val modelAndView = new ModelAndView("board")

@@ -15,7 +15,7 @@
     <!--<mvc:velocity-configurer resource-loader-path="/WEB-INF/view/" />-->
 
     <bean id="velocityConfig" class="org.springframework.web.servlet.view.velocity.VelocityConfigurer">
-        <property name="resourceLoaderPath" value="/WEB-INF/classes/view/"/>
+        <property name="resourceLoaderPath" value="/"/>
     </bean>
 
     <bean id="viewResolver" class="org.springframework.web.servlet.view.velocity.VelocityViewResolver">
