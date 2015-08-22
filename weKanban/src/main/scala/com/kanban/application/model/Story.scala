@@ -23,6 +23,10 @@ class Story(val number: String, val title: String, val phase: String) {
 
   import Story._
 
+  //for velocity
+  def getNumber = number
+  def getTitle = title
+
   private[this] def validate() = {
     if ((number || title).isEmpty) {
       throw new ValidationException("Both number and title are required")
