@@ -18,6 +18,7 @@ class WeKanbanApplication extends HttpServlet {
           .orElse(Option(req.getAttribute("message")))
           .orElse(Option(req.getSession.getAttribute("message")))
           .getOrElse("")
+        req.getSession.removeAttribute("message")
         resp.getWriter.println(CreateStory(param.toString))
       case MethodParts(GET, "kanban" :: listPath) =>
         forward(req, resp, listPath) {

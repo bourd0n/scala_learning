@@ -3,12 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <title>weKanban board</title>
+    <script type="text/javascript" src="/js/jquery-2.1.4.min.js"></script>
+    <script type="text/javascript" src="/js/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="/js/materialize.min.js"></script>
+    <script type="text/javascript" src="/js/main.js">je </script>
+    <link type="text/css" rel="stylesheet" href="/css/main.css"/>
+    <link type="text/css" rel="stylesheet" href="/css/materialize.min.css"/>
+    <script type="text/javascript">
+        init()
+    </script>
 </head>
 <body>
-<h1>
-    weKanban board come shortly
-</h1>
-<p> <a href="/kanban/hello"> $helloMessage </a></p>
-<p> <a href="/kanban/card/create"> Create story</a></p>
+<div class="container">
+    <h2 class="header">weKanban Board</h2>
+    <br/>
+
+    <a class="waves-effect waves-light btn" href="/kanban/card/create">Create Story</a>
+</div>
 </body>
 </html>
