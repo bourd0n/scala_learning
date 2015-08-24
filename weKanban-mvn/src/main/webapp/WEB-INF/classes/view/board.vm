@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>weKanban board</title>
+    <script type="text/javascript" src="/js/jquery-2.1.4.min.js"></script>
+    <script type="text/javascript" src="/js/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="/js/materialize.min.js"></script>
+    <script type="text/javascript" src="/js/main.js">je </script>
+    <link type="text/css" rel="stylesheet" href="/css/main.css"/>
+    <link type="text/css" rel="stylesheet" href="/css/materialize.min.css"/>
+    <script type="text/javascript">
+        init()
+    </script>
+</head>
+<body>
+<div class="container">
+    <h2 class="header">weKanban Board</h2>
+    <br/>
+
+    <span id="message"></span>
+    <br/>
+    <a class="waves-effect waves-light btn" href="/kanban/card/create">Create Story</a>
+
+    <div class="row">
+        <div class="col s4 phase" id="readyPhase">
+            <h3 class="header" title="Stories ready for development. Limit is set to 3">Ready [3]</h3>
+            #foreach( $story in $readyStories )
+                <div class="row">
+                    <div class="col s12 m6">
+                        <div class="card blue-grey darken-1 story" id="$story.number">
+                            <div class="card-content white-text">
+                                <span class="card-title">$story.number</span>
+
+                                <p>$story.title</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            #end
+        </div>
+
+        <div class="col s4 phase" id="devPhase">
+            <h3 class="header" title="Stories in progress. Limit is set to 2">Dev [2]</h3>
+            #foreach( $story in $devStories )
+                <div class="row">
+                    <div class="col s12 m6">
+                        <div class="card blue-grey darken-1 story" id="$story.number">
+                            <div class="card-content white-text">
+                                <span class="card-title">$story.number</span>
+
+                                <p>$story.title</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            #end
+        </div>
+    </div>
+</div>
+</body>
+</html>

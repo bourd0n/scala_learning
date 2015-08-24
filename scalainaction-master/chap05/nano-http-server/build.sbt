@@ -3,7 +3,7 @@ name := "Nano Http server"
 version := "1.0"
 
 organization := "Scala in Action"
-//resolvers += "Scalaz Bintray Repo" at "https://dl.bintray.com/scalaz/releases"
+resolvers += "Scalaz Bintray Repo" at "https://dl.bintray.com/scalaz/releases"
 
 scalaVersion := "2.11.6"
 
