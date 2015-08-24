@@ -1,5 +1,6 @@
 function moveCard(storyNumber, phase) {
-    $.post("/card/move", {storyNumber: storyNumber, phase: phase}, function(message) {
+    $.post("/spring/card/move", {storyNumber: storyNumber, phase: phase}, function(message) {
+        console.log(message);
         $('#message').html(message)
     });
 }

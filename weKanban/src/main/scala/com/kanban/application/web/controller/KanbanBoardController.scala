@@ -2,7 +2,7 @@ package com.kanban.application.web.controller
 
 import com.kanban.application.model.Story
 import org.springframework.stereotype.Controller
-import org.springframework.web.bind.annotation.{RequestMapping, RequestMethod}
+import org.springframework.web.bind.annotation.{ResponseBody, RequestParam, RequestMapping, RequestMethod}
 import org.springframework.web.servlet.ModelAndView
 
 import scala.collection.JavaConversions
@@ -20,6 +20,17 @@ class KanbanBoardController {
     modelAndView.addObject("readyStories", readyStories)
     modelAndView.addObject("devStories", devStories)
     modelAndView
+  }
+
+  @RequestMapping(value = Array("/card/move"), method = Array(RequestMethod.POST))
+  @ResponseBody
+  def moveCard(@RequestParam("storyNumber") storyNumber: String, @RequestParam("phase") phase: String): String = {
+    println(s"move card called")
+    val story = Story.findByNumber(storyNumber)
+    story.moveTo(phase) match {
+      case Right(message) => message
+      case Left(ex) => ex.getMessage
+    }
   }
 
 }

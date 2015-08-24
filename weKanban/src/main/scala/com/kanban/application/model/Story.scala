@@ -15,7 +15,11 @@ object Story {
   }
 
   def findAllByPhase(phase: String): Iterable[Story] = tx {
-    from(stories)(s => where(s.phase === phase) select s) map {s=>s}
+    from(stories)(s => where(s.phase === phase) select s) map { s => s }
+  }
+
+  def findByNumber(number: String) = tx {
+    stories.where(s => s.number === number).single
   }
 }
 
@@ -25,7 +29,10 @@ class Story(val number: String, val title: String, val phase: String) {
 
   //for velocity
   def getNumber = number
+
   def getTitle = title
+
+  private def phaseLimits = Map("ready" -> Some(3), "dev" -> Some(2), "test" -> Some(2), "deploy" -> None)
 
   private[this] def validate() = {
     if ((number || title).isEmpty) {
@@ -37,12 +44,31 @@ class Story(val number: String, val title: String, val phase: String) {
     }
   }
 
+  private[this] def validateLimits(phase: String) = {
+    val currentSize: Long = from(stories) (s => where(s.phase === phase) compute count)
+    if (currentSize == phaseLimits(phase).getOrElse(-1)) {
+      throw new ValidationException("You cannot exceed the limit set for this phase")
+    }
+  }
+
+  def moveTo(phase: String) : Either[Throwable, String] = {
+    tx {
+      try {
+        validateLimits(phase)
+        update(stories) (s => where(s.number === this.number) set(s.phase := phase))
+        Right(s"Card ${this.number} is moved to $phase phase sucessfully.")
+      } catch {
+        case exception: Throwable => Left(exception)
+      }
+    }
+  }
+
   def save(): Either[Throwable, Unit] = {
     try {
       tx {
         validate()
         stories.insert(this)
-        //fail - investigate
+        //todo fail - investigate
         //stories.insertOrUpdate(this)
         Right(())
       }
